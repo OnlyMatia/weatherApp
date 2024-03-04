@@ -3,28 +3,15 @@ const searchBtn = document.getElementById("searchBtn")
 const cityError = document.getElementById("error-city")
 const container = document.getElementById("container")
 const resultDiv = document.getElementById("result")
-
+const icon = document.getElementById("imgIcon")
 const temp = document.getElementById("temp")
 const cityName = document.getElementById("cityName")
 const humidity = document.getElementById("humidity")
 const wind = document.getElementById("wind")
-const icon = document.getElementById("imgIcon")
+
 
 const setData = (data) => {
-    if(data.weather[0].main === "Clouds"){
-        icon.setAttribute("src", "weather-icons/broken-clouds.jpg")
-    }else if(data.weather[0].main === "Thunderstorm"){
-        icon.setAttribute("src", "weather-icons/thunderstorm.jpg")
-    }else if(data.weather[0].main === "Rain"){
-        icon.setAttribute("src", "weather-icons/rain.jpg")
-    }else if(data.weather[0].main === "Clear"){
-        icon.setAttribute("src", "weather-icons/clear-day.jpg")
-    }else if(data.weather[0].main === "Drizzle"){
-        icon.setAttribute("src", "weather-icons/rain-night.jpg")
-    }else if(data.weather[0].main === "Atmosphere"){
-        icon.setAttribute("src", "weather-icons/mist.jpg")
-    }
-
+    icon.setAttribute("src", "weather-icons/"+data.weather[0].main+".png")
     temp.innerHTML = `${Math.round(data.main.temp)}<sup>o</sup>C`;
     cityName.innerText = data.name;
     humidity.innerText =`${data.main.humidity}%`
@@ -59,11 +46,10 @@ const getData = () => {
     }else{
         fetchURL(city)
         .then((data) => {
-            
         setData(data);
         isInputFieldTrue();
         })
-        .catch(err => console.error("Error 404"))
+        .catch(err => alert("Enter a valid country"))
     }
 }
 
